@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load staticfiles %}
+<div class="container text-center"><h1>Create Product!</h1><img src="{% static 'project.png' %}"  width="80" height="80" alt="">
+</div>
+
+{% if error %}
+<h3>{{error}}</h3>
+{% endif %}
+
+<form action="{% url 'create' %}" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" name ="title"class="form-control" id="title"  placeholder="Enter Product Title">
+  </div>
+   <div class="form-group">
+    <label for="body">Body</label>
+    <input type="textbox" name ="body"class="form-control" id="body"  placeholder="Enter Product Description">
+  </div>
+  <div class="form-group">
+    <label for="url">URL</label>
+    <input type="text" name ="url"class="form-control" id="url"  placeholder="Enter URL">
+  </div>
+  <div class="form-group">
+    <label for="icon">Product Icon</label><br>
+    <input type="file" name ="icon" id="icon">
+  </div>
+   <div class="form-group">
+    <label for="image">Product Image</label><br>
+    <input type="file" name ="image" id="image">
+  </div>
+ 
+  <button type="submit" class="btn btn-primary" style ="background:#da552f;border:0px">Add Product</button>
+
+
+</form>
+{% endblock %}
