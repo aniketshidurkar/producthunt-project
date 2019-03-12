@@ -1,7 +1,33 @@
-
 {% extends 'base.html' %}
 {% block content %}
- {% if user.is_authenticated%}
-        <h2 class="colourchanger pt-3">Welcome, {{user.username|title}}</h2>
-        {% endif %}
+{% if user.is_authenticated%}
+<h2 class="colourchanger pt-3">Welcome, {{user.username|title}}</h2>
+{% endif %}
+<hr>
+
+{% for product in products.all %}
+<div class="row pt-2">
+        <div class="col-lg-2" onClick="window.location='{% url 'detail' product.id %}'" style="cursor:pointer">
+                <img src="{{product.icon.url}}" class="img-fluid">
+                <br>
+        </div>
+        <div class="col-lg-6" onClick="window.location='{% url 'detail' product.id %}'" style="cursor:pointer">
+               
+                        <h2>{{product.title}}</h2><br>
+                        By {{product.hunter.username}}<br>
+                        {{product.summary}}...
+               
+        </div>
+        <div class="col-lg-4">
+                <a name="upvote" id="upvote" class="btn btn-primary btn-lg" style="background:#da552f;border:0px" href="javascript:{document.getElementById('upvoteform{{product.id}}').submit()}"
+                        role="button"><span class="oi oi-thumb-up"></span>Upvote {{product.votes_total}}</a>
+                <form id='upvoteform{{product.id}}' action="{% url 'upvote' product.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden">
+                </form>
+        </div>
+</div>
+
+
+{% endfor %}
 {% endblock %}
